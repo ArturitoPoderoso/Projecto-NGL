@@ -8,7 +8,6 @@ import {
   Lock, 
   CheckCircle2, 
   RotateCcw, 
-  Check, 
   AlertCircle 
 } from 'lucide-react';
 
@@ -33,8 +32,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [enviado, setEnviado] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [copiedLink, setCopiedLink] = useState(false);
-  const [clickCount, setClickCount] = useState(280);
 
   // Estados para soportar imágenes personalizadas
   const [escudoError, setEscudoError] = useState(false);
@@ -90,7 +87,6 @@ export default function App() {
       });
 
       setEnviado(true);
-      setClickCount((prev) => prev + 1);
     } catch (err) {
       console.error('Error al enviar:', err);
       confetti({
@@ -109,12 +105,6 @@ export default function App() {
     setEnviado(false);
     setContenido('');
     setErrorMsg('');
-  };
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 2500);
   };
 
   return (
@@ -293,28 +283,6 @@ export default function App() {
                 )}
               </button>
 
-              {/* Social Proof */}
-              <div className="text-center font-bold text-xs sm:text-[13px] text-white flex items-center justify-center gap-1.5 pt-0.5">
-                <span>👇</span>
-                <span>{clickCount} amigos acaban de tocar el botón</span>
-                <span>👇</span>
-              </div>
-
-              {/* Botón Secundario */}
-              <button
-                type="button"
-                onClick={handleCopyLink}
-                className="w-full py-3 sm:py-3.5 px-6 rounded-full font-bold text-white text-sm sm:text-base bg-[#141210] hover:bg-[#201d1a] border border-white/10 active:scale-[0.98] transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
-              >
-                {copiedLink ? (
-                  <>
-                    <Check className="w-4 h-4 text-emerald-400" />
-                    <span className="text-emerald-400 text-xs sm:text-sm">¡Enlace copiado al portapapeles!</span>
-                  </>
-                ) : (
-                  <span>¡Obtén tus propios mensajes!</span>
-                )}
-              </button>
             </div>
           ) : (
             /* Pantalla de Éxito */
