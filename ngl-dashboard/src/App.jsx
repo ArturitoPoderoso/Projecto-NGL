@@ -700,25 +700,35 @@ export default function App() {
 
       {/* MODAL: FORMATO HISTORIA DE INSTAGRAM (STICKER NGL REAL) */}
       {storyModalMessage && (
-        <div className="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
-          <div className="bg-[#181412] border border-white/15 rounded-[36px] p-5 sm:p-7 max-w-sm sm:max-w-md w-full shadow-2xl relative my-auto">
+        <div 
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setStoryModalMessage(null);
+              setCopiedStory(false);
+            }
+          }}
+          className="fixed inset-0 z-50 backdrop-blur-md bg-black/75 flex items-center justify-center p-4 animate-fade-in overflow-y-auto"
+        >
+          {/* RECUADRO BLANCO ESTÉTICO PARA CAPTURAS PERFECTAS */}
+          <div className="bg-white rounded-[36px] p-5 sm:p-7 max-w-sm sm:max-w-md w-full shadow-2xl shadow-black/50 border border-slate-100 relative my-auto">
             <button
               onClick={() => {
                 setStoryModalMessage(null);
                 setCopiedStory(false);
               }}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer z-10"
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer z-10"
+              title="Cerrar"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="text-center mb-4">
-              <h3 className="font-black text-lg text-white">Sticker para Historia 📸</h3>
-              <p className="text-xs text-slate-400">Diseño idéntico a NGL con fondo blanco</p>
+            <div className="text-center mb-3">
+              <h3 className="font-black text-lg text-slate-900">Sticker para Historia 📸</h3>
+              <p className="text-xs text-slate-500 font-medium">Fondo blanco estético listo para captura</p>
             </div>
 
             {/* CONTENEDOR DEL STICKER NGL CLÁSICO (FONDO BLANCO Y ALTURA DINÁMICA) */}
-            <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-2xl bg-white border border-black/10 my-3">
+            <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-xl shadow-slate-300/50 bg-white border border-slate-200 my-3">
               
               {/* CABECERA CON DEGRADADO NARANJA UNFV + ICONO DE LA URRACA AL COSTADO */}
               <div className="bg-gradient-to-r from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-4 sm:px-6 py-3.5 sm:py-4 text-white relative flex items-center justify-center gap-3 sm:gap-4">
@@ -762,7 +772,7 @@ export default function App() {
 
             {/* Enlace simulado de sticker NGL */}
             <div className="text-center my-3">
-              <span className="inline-block bg-white/10 text-slate-300 font-bold text-xs px-3.5 py-1 rounded-full border border-white/15">
+              <span className="inline-block bg-slate-100 text-slate-600 font-bold text-xs px-3.5 py-1.5 rounded-full border border-slate-200">
                 🔗 Link de respuesta: ngl.link/urracavillar
               </span>
             </div>
