@@ -620,8 +620,17 @@ export default function App() {
 
                   <div className="bg-[#f55f15] px-4 py-2.5 flex items-center justify-between text-black">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-[#110e0c] flex items-center justify-center flex-shrink-0">
-                        <span className="text-xs">🤫</span>
+                      <div className="w-7 h-7 rounded-full bg-[#110e0c] border border-white/20 overflow-hidden flex items-center justify-center flex-shrink-0">
+                        {!iconFailedAll ? (
+                          <img 
+                            src={ICON_FORMATS[iconFormatIdx]} 
+                            alt="Urraca" 
+                            onError={handleIconError} 
+                            className="w-full h-full object-cover" 
+                          />
+                        ) : (
+                          <span className="text-xs">🤫</span>
+                        )}
                       </div>
                       <span className="font-extrabold text-xs tracking-tight">
                         @urracavillarrealina
@@ -689,67 +698,92 @@ export default function App() {
         )}
       </main>
 
-      {/* MODAL: FORMATO HISTORIA DE INSTAGRAM */}
+      {/* MODAL: FORMATO HISTORIA DE INSTAGRAM (STICKER NGL REAL) */}
       {storyModalMessage && (
-        <div className="fixed inset-0 z-50 backdrop-blur-md bg-black/80 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-[#1c1614] border border-white/15 rounded-[32px] p-6 max-w-sm w-full shadow-2xl relative">
+        <div className="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
+          <div className="bg-[#181412] border border-white/15 rounded-[36px] p-5 sm:p-7 max-w-sm sm:max-w-md w-full shadow-2xl relative my-auto">
             <button
               onClick={() => {
                 setStoryModalMessage(null);
                 setCopiedStory(false);
               }}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer z-10"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="text-center mb-4">
-              <h3 className="font-black text-lg text-white">Formato Historia 📸</h3>
-              <p className="text-xs text-slate-400">Listo para compartir en Instagram o WhatsApp</p>
+              <h3 className="font-black text-lg text-white">Sticker para Historia 📸</h3>
+              <p className="text-xs text-slate-400">Diseño idéntico a NGL con fondo blanco</p>
             </div>
 
-            <div className="rounded-[24px] p-5 bg-gradient-to-br from-[#f55f15] via-[#ea580c] to-[#9a3412] shadow-xl text-center my-2">
-              <div className="rounded-[20px] overflow-hidden shadow-2xl border border-white/10 text-left">
-                <div className="bg-[#f55f15] px-4 py-2.5 flex items-center gap-2.5 text-black border-b border-black/10">
-                  <div className="w-7 h-7 rounded-full bg-[#110e0c] flex items-center justify-center">
-                    <span className="text-xs">🤫</span>
-                  </div>
-                  <div className="leading-tight">
-                    <div className="font-extrabold text-xs">@urracavillarrealina</div>
-                    <div className="text-[10px] font-semibold text-black/80">send me anonymous confessions</div>
-                  </div>
+            {/* CONTENEDOR DEL STICKER NGL CLÁSICO (FONDO BLANCO Y ALTURA DINÁMICA) */}
+            <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-2xl bg-white border border-black/10 my-3">
+              
+              {/* CABECERA CON DEGRADADO NARANJA UNFV + ICONO DE LA URRACA */}
+              <div className="bg-gradient-to-b from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-5 pt-5 pb-4 text-center text-white relative">
+                
+                {/* Icono de la Urraca (foto icono.jpg) */}
+                <div className="w-13 h-13 sm:w-15 sm:h-15 mx-auto rounded-full bg-[#110e0c] border-[2.5px] border-white shadow-md overflow-hidden flex items-center justify-center mb-2">
+                  {!iconFailedAll ? (
+                    <img 
+                      src={ICON_FORMATS[iconFormatIdx]} 
+                      alt="Urraca" 
+                      onError={handleIconError} 
+                      className="w-full h-full object-cover" 
+                    />
+                  ) : (
+                    <span className="text-2xl">🤫</span>
+                  )}
                 </div>
 
-                <div className="bg-[#261e1b] p-4 min-h-[100px] flex items-center">
-                  <p className="text-white font-bold text-base leading-snug">
-                    {storyModalMessage.contenido}
-                  </p>
+                {/* Textos del Encabezado NGL */}
+                <div className="text-[12px] sm:text-[13px] font-extrabold text-white tracking-wide uppercase drop-shadow-sm">
+                  Send me anonymous
+                </div>
+                <div className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center justify-center gap-1.5 drop-shadow-md">
+                  <span>Confessions</span>
+                  <span className="text-amber-300 text-lg">😇</span>
+                </div>
+                <div className="mt-1.5 inline-flex items-center gap-1 bg-black/25 backdrop-blur-sm text-white font-bold text-[11px] px-3 py-0.5 rounded-full border border-white/20">
+                  <span>@urracavillarrealina</span>
                 </div>
               </div>
 
-              <div className="mt-4 inline-block bg-white/20 backdrop-blur-md text-white font-black text-[11px] px-3 py-1 rounded-full border border-white/30">
-                ngl.link/urracavillar
+              {/* CUERPO BLANCO QUE SE DESPLIEGA DINÁMICAMENTE SEGÚN LA CANTIDAD DE TEXTO */}
+              <div className="bg-white p-6 sm:p-8 min-h-[140px] flex items-center justify-center text-center">
+                <p className="text-black font-extrabold text-lg sm:text-2xl leading-snug break-words whitespace-pre-wrap select-text w-full">
+                  {storyModalMessage.contenido}
+                </p>
               </div>
             </div>
 
-            <div className="mt-5 space-y-2">
+            {/* Enlace simulado de sticker NGL */}
+            <div className="text-center my-3">
+              <span className="inline-block bg-white/10 text-slate-300 font-bold text-xs px-3.5 py-1 rounded-full border border-white/15">
+                🔗 Link de respuesta: ngl.link/urracavillar
+              </span>
+            </div>
+
+            {/* Acciones */}
+            <div className="mt-4 space-y-2">
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(`"${storyModalMessage.contenido}"\n\n— Confesión anónima en UNFV 🤫\nngl.link/urracavillar`);
                   setCopiedStory(true);
                   setTimeout(() => setCopiedStory(false), 2000);
                 }}
-                className="w-full py-3 px-4 rounded-full font-bold text-white bg-[#f55f15] hover:bg-[#e04f08] transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-full font-bold text-white bg-[#f55f15] hover:bg-[#e04f08] transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
               >
                 {copiedStory ? (
                   <>
                     <Check className="w-4 h-4 text-emerald-300" />
-                    <span>¡Texto copiado para tu historia!</span>
+                    <span>¡Texto copiado al portapapeles!</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-4 h-4" />
-                    <span>Copiar texto para historia</span>
+                    <span>Copiar texto de la confesión</span>
                   </>
                 )}
               </button>
