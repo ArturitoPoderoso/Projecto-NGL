@@ -89,13 +89,7 @@ export default function App() {
       setEnviado(true);
     } catch (err) {
       console.error('Error al enviar:', err);
-      confetti({
-        particleCount: 60,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#f55f15', '#ff9800', '#ffffff']
-      });
-      setEnviado(true);
+      setErrorMsg(err.message || 'No se pudo enviar la confesión. Inténtalo nuevamente.');
     } finally {
       setLoading(false);
     }

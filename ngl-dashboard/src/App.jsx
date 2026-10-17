@@ -186,7 +186,13 @@ export default function App() {
         setIsRealtimeActive(status === 'SUBSCRIBED');
       });
 
+    // Polling de respaldo cada 4 segundos para garantizar recepción continua
+    const pollInterval = setInterval(() => {
+      fetchMensajes();
+    }, 4000);
+
     return () => {
+      clearInterval(pollInterval);
       supabase.removeChannel(channel);
     };
   }, [isAuthenticated]);
