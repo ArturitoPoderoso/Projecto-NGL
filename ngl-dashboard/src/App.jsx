@@ -723,12 +723,12 @@ export default function App() {
             </button>
 
             <div className="text-center mb-3">
-              <h3 className="font-black text-lg text-slate-900">Sticker para Historia 📸</h3>
-              <p className="text-xs text-slate-500 font-medium">Fondo blanco estético listo para captura</p>
+              <h3 className="font-black text-lg text-slate-900">Sticker para Historia</h3>
+              <p className="text-xs text-slate-500 font-medium">Listo para captura</p>
             </div>
 
             {/* CONTENEDOR DEL STICKER NGL CLÁSICO (FONDO BLANCO CON CONTORNO NEGRITO Y PROFUNDIDAD) */}
-            <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-2xl shadow-black/20 bg-white border-2 border-slate-800/40 my-3">
+            <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-2xl shadow-black/20 bg-white border-2 border-slate-800/40 my-2">
               
               {/* CABECERA CON DEGRADADO NARANJA UNFV + ICONO DE LA URRACA AL COSTADO */}
               <div className="bg-gradient-to-r from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-4 sm:px-6 py-3.5 sm:py-4 text-white relative flex items-center justify-center gap-3 sm:gap-4">
@@ -768,37 +768,6 @@ export default function App() {
                   {storyModalMessage.contenido}
                 </p>
               </div>
-            </div>
-
-            {/* Enlace simulado de sticker NGL */}
-            <div className="text-center my-3">
-              <span className="inline-block bg-slate-100 text-slate-600 font-bold text-xs px-3.5 py-1.5 rounded-full border border-slate-200">
-                🔗 Link de respuesta: ngl.link/urracavillar
-              </span>
-            </div>
-
-            {/* Acciones */}
-            <div className="mt-4 space-y-2">
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(`"${storyModalMessage.contenido}"\n\n— Confesión anónima en UNFV 🤫\nngl.link/urracavillar`);
-                  setCopiedStory(true);
-                  setTimeout(() => setCopiedStory(false), 2000);
-                }}
-                className="w-full py-3.5 px-4 rounded-full font-bold text-white bg-[#f55f15] hover:bg-[#e04f08] transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-              >
-                {copiedStory ? (
-                  <>
-                    <Check className="w-4 h-4 text-emerald-300" />
-                    <span>¡Texto copiado al portapapeles!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4" />
-                    <span>Copiar texto de la confesión</span>
-                  </>
-                )}
-              </button>
             </div>
           </div>
         </div>
