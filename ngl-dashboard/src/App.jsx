@@ -11,8 +11,6 @@ import {
   Check, 
   Trash2, 
   Search, 
-  Volume2, 
-  VolumeX, 
   Star,
   Sparkles,
   Share2,
@@ -432,9 +430,9 @@ export default function App() {
                 </span>
               </div>
               <div className="flex items-center gap-1.5 text-[11px] mt-0.5">
-                <span className={`w-2 h-2 rounded-full ${isRealtimeActive ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-                <span className={isRealtimeActive ? 'text-emerald-400 font-medium' : 'text-amber-400 font-medium'}>
-                  {isRealtimeActive ? 'Realtime activo' : 'Conectando...'}
+                <span className={`w-2 h-2 rounded-full ${isRealtimeActive ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'}`} />
+                <span className={isRealtimeActive ? 'text-emerald-400 font-medium' : 'text-slate-400 font-medium'}>
+                  {isRealtimeActive ? 'En línea' : 'No en línea'}
                 </span>
               </div>
             </div>
@@ -443,29 +441,11 @@ export default function App() {
           {/* Acciones de la barra */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => setSoundEnabled(!soundEnabled)}
-              className="p-2 sm:px-3 sm:py-2 rounded-full bg-[#261e1b] hover:bg-[#3d332f] border border-white/10 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
-              title={soundEnabled ? 'Silenciar alertas' : 'Activar sonido de notificación'}
-            >
-              {soundEnabled ? <Volume2 className="w-4 h-4 text-[#f55f15]" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
-              <span className="hidden md:inline">{soundEnabled ? 'Sonido ON' : 'Silencio'}</span>
-            </button>
-
-            <button
               onClick={fetchMensajes}
-              className="p-2 rounded-full bg-[#261e1b] hover:bg-[#3d332f] border border-white/10 text-slate-300 hover:text-white transition-all cursor-pointer"
+              className="p-2 rounded-full bg-[#261e1b] hover:bg-[#3d332f] border border-white/10 text-slate-300 hover:text-white transition-all cursor-pointer shadow-sm"
               title="Actualizar mensajes"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-[#f55f15]' : ''}`} />
-            </button>
-
-            <button
-              onClick={handleLock}
-              className="flex items-center gap-1.5 text-xs font-bold bg-[#141210] hover:bg-red-500/20 hover:text-red-300 border border-white/10 hover:border-red-500/30 px-3.5 py-2 rounded-full text-slate-300 transition-all cursor-pointer"
-              title="Bloquear panel"
-            >
-              <Lock className="w-3.5 h-3.5 text-slate-400" />
-              <span className="hidden sm:inline">Bloquear</span>
             </button>
           </div>
         </div>
@@ -501,30 +481,16 @@ export default function App() {
                 </span>
               </div>
               <p className="text-xs text-slate-300 mt-0.5">
-                Bandeja de confesiones en vivo • Conectado a Supabase
+                Bandeja de confesiones en vivo
               </p>
             </div>
           </div>
 
           {/* Estadísticas */}
-          <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-            <div className="bg-black/40 border border-white/10 px-4 py-2 rounded-2xl text-center flex-1 md:flex-none">
+          <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+            <div className="bg-black/40 border border-white/10 px-5 py-2 rounded-2xl text-center">
               <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Total</span>
               <span className="text-xl font-black text-white">{mensajes.length}</span>
-            </div>
-
-            <div className="bg-black/40 border border-white/10 px-4 py-2 rounded-2xl text-center flex-1 md:flex-none">
-              <span className="text-[10px] uppercase font-bold text-amber-400 block tracking-wider flex items-center justify-center gap-1">
-                <Star className="w-3 h-3 fill-amber-400" /> Favoritas
-              </span>
-              <span className="text-xl font-black text-white">{favorites.length}</span>
-            </div>
-
-            <div className="bg-black/40 border border-white/10 px-4 py-2 rounded-2xl text-center flex-1 md:flex-none">
-              <span className="text-[10px] uppercase font-bold text-emerald-400 block tracking-wider">Estado</span>
-              <span className="text-xs font-black text-emerald-400 flex items-center justify-center gap-1 mt-1">
-                ● En vivo
-              </span>
             </div>
           </div>
         </div>
