@@ -1,8 +1,7 @@
 # Términos de Servicio y Política de Privacidad
 
 **Plataforma de Confesiones Anónimas Estudiantiles**  
-**Identificador:** `@urracavillarrealina`  
-**Ámbito:** Comunidad Universitaria — Universidad Nacional Federico Villarreal (UNFV)  
+**Comunidad:** Estudiantes de la Universidad Nacional Federico Villarreal (UNFV)  
 **Última actualización:** Octubre 2026  
 
 ---
@@ -10,7 +9,7 @@
 ## ⚠️ AVISO LEGAL Y DESCARGO DE RESPONSABILIDAD (DISCLAIMER)
 
 1. **Independencia Institucional:**  
-   Esta plataforma y la cuenta administradora (`@urracavillarrealina`) son iniciativas **100% estudiantiles, autónomas y no oficiales**. **NO** representan, no tienen vínculo administrativo, laboral ni societario con la **Universidad Nacional Federico Villarreal (UNFV)** ni con ninguna de sus facultades, escuelas profesionales, autoridades o dependencias oficiales. El uso de símbolos tradicionales (como la Urraca o representaciones alegóricas) tiene fines meramente culturales y de identidad estudiantil.
+   Esta plataforma y su administración son iniciativas **100% estudiantiles, autónomas y no oficiales**. **NO** representan, no tienen vínculo administrativo, laboral ni societario con la **Universidad Nacional Federico Villarreal (UNFV)** ni con ninguna de sus facultades, escuelas profesionales, autoridades o dependencias oficiales. El uso de símbolos tradicionales (como la Urraca o alegorías) tiene fines meramente culturales y de libre esparcimiento estudiantil.
 
 2. **Intermediación y Contenido Generado por Terceros:**  
    Esta plataforma opera exclusivamente como un canal técnico de recepción de mensajes anónimos. Conforme a las normas generales de telecomunicaciones e internet, **la administración no es autora, instigadora ni garante del contenido enviado por los usuarios**. La responsabilidad civil y penal derivada de cualquier mensaje recae exclusivamente en su emisor material.
@@ -30,14 +29,14 @@ Queda terminantemente prohibido utilizar esta herramienta para enviar:
 * **Vulneración de Seguridad:** Intentos de inyección SQL, spam masivo, ataques DDoS o manipulación del portal.
 
 ### 1.2. Facultad de Moderación y Veto
-La administración de `@urracavillarrealina`:
+La administración de la plataforma:
 * Se reserva el **derecho irrevocable de filtrar, descartar, omitir o eliminar permanentemente** cualquier confesión que considere lesiva, denigrante o contraria a estos términos, sin necesidad de justificación previa.
 * No está obligada a publicar la totalidad de confesiones recibidas.
 
 ### 1.3. Procedimiento de Notificación y Retiro Inmediato (Takedown)
-Si cualquier miembro de la comunidad villarrealina o tercero considera que una confesión compartida afecta su honor, vulnera su privacidad o contiene datos no consentidos:
-* Podrá comunicarse directamente por mensaje privado (DM) a la cuenta de Instagram **`@urracavillarrealina`** solicitando el retiro.
-* La administración procederá a la **eliminación de la publicación en un plazo máximo razonable**, privilegiando siempre la concordia y el bienestar del estudiante afectado.
+Si cualquier miembro de la comunidad villarrealina o tercero considera que una confesión compartida afecta su honor, vulnera su privacidad, le incomoda o contiene información que le molesta:
+* Podrá **enviar una confesión o mensaje directamente a través de esta misma plataforma** detallando qué mensaje o situación le incomoda y solicitando su retiro.
+* La administración revisa continuamente la bandeja y procederá a la **eliminación inmediata de la confesión o publicación señalada**, priorizando en todo momento el respeto, la paz y la privacidad de la persona afectada.
 
 ---
 

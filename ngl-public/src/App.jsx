@@ -397,7 +397,7 @@ export default function App() {
 
                   <h4 className="font-extrabold text-white text-sm">3. Retiro Inmediato (Takedown)</h4>
                   <p>
-                    Si alguna confesión publicada te afecta o vulnera tu intimidad, escríbenos al DM de Instagram en <strong>@urracavillarrealina</strong> y será eliminada de forma inmediata.
+                    Si alguna confesión te afecta, incomoda o vulnera tu intimidad, simplemente envía un mensaje o confesión por esta misma plataforma indicando qué mensaje deseas que se retire y será eliminado a la brevedad.
                   </p>
                 </>
               ) : (
