@@ -727,8 +727,8 @@ export default function App() {
               <p className="text-xs text-slate-500 font-medium">Fondo blanco estético listo para captura</p>
             </div>
 
-            {/* CONTENEDOR DEL STICKER NGL CLÁSICO (FONDO BLANCO Y ALTURA DINÁMICA) */}
-            <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-xl shadow-slate-300/50 bg-white border border-slate-200 my-3">
+            {/* CONTENEDOR DEL STICKER NGL CLÁSICO (FONDO BLANCO CON CONTORNO NEGRITO Y PROFUNDIDAD) */}
+            <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-2xl shadow-black/20 bg-white border-2 border-slate-800/40 my-3">
               
               {/* CABECERA CON DEGRADADO NARANJA UNFV + ICONO DE LA URRACA AL COSTADO */}
               <div className="bg-gradient-to-r from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-4 sm:px-6 py-3.5 sm:py-4 text-white relative flex items-center justify-center gap-3 sm:gap-4">
