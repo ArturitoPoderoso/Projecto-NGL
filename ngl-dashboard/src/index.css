@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .unfv-bg {
+    background-color: #0e0d0b;
+    background-image: 
+      radial-gradient(circle at 10% 5%, rgba(245, 95, 21, 0.08) 0%, transparent 35%),
+      radial-gradient(circle at 90% 90%, rgba(245, 95, 21, 0.06) 0%, transparent 40%);
+  }
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0e0d0b;
+  color: #ffffff;
+  overflow-x: hidden;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e0d0b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 95, 21, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 95, 21, 0.5);
+}
