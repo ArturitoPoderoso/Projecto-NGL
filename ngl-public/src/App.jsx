@@ -8,7 +8,10 @@ import {
   Lock, 
   CheckCircle2, 
   RotateCcw, 
-  AlertCircle 
+  AlertCircle,
+  X,
+  ShieldCheck,
+  FileText
 } from 'lucide-react';
 
 // Formatos soportados para la imagen "icono" (png, jpg, jpeg, webp, svg)
@@ -32,6 +35,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [enviado, setEnviado] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [legalModal, setLegalModal] = useState(null); // 'terms' | 'privacy' | null
 
   // Estados para soportar imágenes personalizadas
   const [escudoError, setEscudoError] = useState(false);
@@ -301,13 +305,138 @@ export default function App() {
 
         {/* FOOTER: TERMS Y PRIVACY */}
         <footer className="w-full pt-3 pb-2 text-center z-10">
-          <div className="flex justify-center gap-4 text-xs text-[#8c837c] font-medium">
-            <a href="#terms" className="hover:text-slate-300 transition-colors">Terms</a>
-            <a href="#privacy" className="hover:text-slate-300 transition-colors">Privacy</a>
+          <div className="flex items-center justify-center gap-3 text-xs text-[#8c837c] font-medium">
+            <button
+              type="button"
+              onClick={() => setLegalModal('terms')}
+              className="hover:text-slate-300 transition-colors cursor-pointer"
+            >
+              Terms
+            </button>
+            <span className="text-white/20">•</span>
+            <button
+              type="button"
+              onClick={() => setLegalModal('privacy')}
+              className="hover:text-slate-300 transition-colors cursor-pointer"
+            >
+              Privacy
+            </button>
           </div>
         </footer>
 
       </div>
+
+      {/* MODAL DE TÉRMINOS Y PRIVACIDAD */}
+      {legalModal && (
+        <div 
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setLegalModal(null);
+          }}
+          className="fixed inset-0 z-50 backdrop-blur-md bg-black/80 flex items-center justify-center p-4 animate-fade-in"
+        >
+          <div className="bg-[#1c1614] border border-white/15 rounded-[28px] max-w-md w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden relative">
+            
+            {/* Header del modal con pestañas */}
+            <div className="p-4 border-b border-white/10 flex items-center justify-between">
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setLegalModal('terms')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                    legalModal === 'terms'
+                      ? 'bg-[#f55f15] text-white shadow-md'
+                      : 'text-slate-400 hover:text-white bg-white/5'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Términos</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setLegalModal('privacy')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                    legalModal === 'privacy'
+                      ? 'bg-[#f55f15] text-white shadow-md'
+                      : 'text-slate-400 hover:text-white bg-white/5'
+                  }`}
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Privacidad</span>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setLegalModal(null)}
+                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Contenido scrolleable */}
+            <div className="p-5 overflow-y-auto text-xs text-slate-300 space-y-3.5 leading-relaxed">
+              {legalModal === 'terms' ? (
+                <>
+                  <div className="p-2.5 rounded-xl bg-[#f55f15]/10 border border-[#f55f15]/30 text-amber-200">
+                    <strong>⚠️ Descargo Institucional:</strong> Plataforma 100% estudiantil e independiente. NO oficial ni vinculada a la administración de la Universidad Nacional Federico Villarreal (UNFV).
+                  </div>
+
+                  <h4 className="font-extrabold text-white text-sm">1. Responsabilidad de Contenido</h4>
+                  <p>
+                    Esta plataforma es un canal técnico de entretenimiento estudiantil. La responsabilidad legal y moral de cada confesión recae exclusivamente en su autor.
+                  </p>
+
+                  <h4 className="font-extrabold text-white text-sm">2. Conductas Prohibidas</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-slate-300">
+                    <li>Difamación, calumnias o ataques al honor personal.</li>
+                    <li>Divulgación no consentida de fotos íntimas, números o datos privados (doxxing).</li>
+                    <li>Acoso escolar, amenazas o mensajes de odio.</li>
+                  </ul>
+
+                  <h4 className="font-extrabold text-white text-sm">3. Retiro Inmediato (Takedown)</h4>
+                  <p>
+                    Si alguna confesión publicada te afecta o vulnera tu intimidad, escríbenos al DM de Instagram en <strong>@urracavillarrealina</strong> y será eliminada de forma inmediata.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+                    <strong>🔒 Garantía de Anonimato:</strong> No guardamos tu nombre, correo ni datos personales.
+                  </div>
+
+                  <h4 className="font-extrabold text-white text-sm">1. Sin Cuentas ni Registros</h4>
+                  <p>
+                    No necesitas iniciar sesión con Google ni registrar ningún correo. El envío de confesiones es directo e indetectable.
+                  </p>
+
+                  <h4 className="font-extrabold text-white text-sm">2. Datos Almacenados</h4>
+                  <p>
+                    Únicamente se almacena el texto del mensaje y la fecha/hora del envío en nuestra base de datos protegida. Ningún mensaje está asociado a tu identidad.
+                  </p>
+
+                  <h4 className="font-extrabold text-white text-sm">3. Protección de Datos (Perú)</h4>
+                  <p>
+                    En respeto a la Ley N° 29733 de Protección de Datos Personales, nos comprometemos a no comercializar ni difundir información privada.
+                  </p>
+                </>
+              )}
+            </div>
+
+            {/* Footer con botón de cerrar */}
+            <div className="p-3 border-t border-white/10 text-center bg-[#141210]">
+              <button
+                type="button"
+                onClick={() => setLegalModal(null)}
+                className="w-full py-2.5 rounded-full font-bold text-white bg-[#f55f15] hover:bg-[#e04f08] transition-all text-xs"
+              >
+                Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Línea horizontal naranja fija en el borde inferior de la pantalla */}
       <div className="fixed bottom-0 left-0 right-0 h-[2px] bg-[#f55f15] opacity-80 z-20" />
