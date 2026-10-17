@@ -230,9 +230,7 @@ export default function App() {
 
   // Filtrado
   const mensajesFiltrados = mensajes.filter((m) => {
-    const matchesSearch = m.contenido?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab = activeTab === 'all' || favorites.includes(m.id);
-    return matchesSearch && matchesTab;
+    return !searchQuery.trim() || m.contenido?.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   // ========================================================
@@ -454,11 +452,11 @@ export default function App() {
       {/* CUERPO DEL DASHBOARD */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-8 py-6 z-10">
 
-        {/* HERO BANNER: PERFIL Y ESTADÍSTICAS */}
-        <div className="mb-6 rounded-[26px] bg-[#261e1b] border border-white/10 p-5 sm:p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-center gap-4 w-full md:w-auto">
+        {/* CABECERA DE PERFIL LIMPIA (SIN RECUADRO PESADO ARTIFICIAL) */}
+        <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1">
+          <div className="flex items-center gap-3.5">
             {/* Avatar del usuario */}
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#110e0c] border-2 border-[#f55f15] p-0.5 flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden">
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#110e0c] border-2 border-[#f55f15] p-0.5 flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden">
               {!iconFailedAll ? (
                 <img 
                   src={ICON_FORMATS[iconFormatIdx]} 
@@ -473,54 +471,32 @@ export default function App() {
 
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="font-extrabold text-lg sm:text-xl text-white tracking-tight">
+                <h2 className="font-extrabold text-xl sm:text-2xl text-white tracking-tight">
                   @urracavillarrealina
                 </h2>
-                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#f55f15] text-white">
+                <span className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#f55f15] text-white shadow-sm">
                   UNFV
                 </span>
               </div>
-              <p className="text-xs text-slate-300 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-300 font-medium mt-0.5">
                 Bandeja de confesiones en vivo
               </p>
             </div>
           </div>
 
-          {/* Estadísticas */}
-          <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-            <div className="bg-black/40 border border-white/10 px-5 py-2 rounded-2xl text-center">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Total</span>
-              <span className="text-xl font-black text-white">{mensajes.length}</span>
-            </div>
+          <div className="bg-white/5 border border-white/10 px-4 py-1.5 rounded-full flex items-center gap-2">
+            <span className="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Total</span>
+            <span className="text-base sm:text-lg font-black text-white">{mensajes.length}</span>
           </div>
         </div>
 
-        {/* TABS Y BUSCADOR */}
+        {/* BARRA: TODAS Y BUSCADOR (SIN RECUADROS EXTRA) */}
         <div className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 bg-[#261e1b] p-1.5 rounded-2xl border border-white/10 w-full sm:w-auto">
-            <button
-              onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer flex-1 sm:flex-none justify-center ${
-                activeTab === 'all'
-                  ? 'bg-[#f55f15] text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <MessageSquare className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <div className="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-[#f55f15] text-white shadow-md flex items-center gap-2">
+              <MessageSquare className="w-4 h-4" />
               <span>Todas ({mensajes.length})</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('favorites')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer flex-1 sm:flex-none justify-center ${
-                activeTab === 'favorites'
-                  ? 'bg-[#f55f15] text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <Star className="w-3.5 h-3.5" />
-              <span>Favoritas ({favorites.length})</span>
-            </button>
+            </div>
           </div>
 
           <div className="relative w-full sm:max-w-xs">
@@ -530,7 +506,7 @@ export default function App() {
               placeholder="Buscar en las confesiones..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#261e1b] border border-white/10 rounded-2xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-[#f55f15] focus:ring-1 focus:ring-[#f55f15]"
+              className="w-full bg-[#1c1715] border border-white/10 rounded-full pl-10 pr-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-[#f55f15] focus:ring-1 focus:ring-[#f55f15]"
             />
           </div>
         </div>
@@ -625,16 +601,6 @@ export default function App() {
                       </button>
 
                       <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => toggleFavorite(msg.id)}
-                          className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
-                            isFav ? 'text-amber-400 bg-amber-400/10' : 'text-slate-400 hover:text-white hover:bg-white/5'
-                          }`}
-                          title={isFav ? 'Quitar de favoritas' : 'Guardar en favoritas'}
-                        >
-                          <Star className={`w-3.5 h-3.5 ${isFav ? 'fill-amber-400' : ''}`} />
-                        </button>
-
                         <button
                           onClick={() => handleCopyText(msg.id, msg.contenido)}
                           className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
