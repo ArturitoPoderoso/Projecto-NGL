@@ -720,11 +720,11 @@ export default function App() {
             {/* CONTENEDOR DEL STICKER NGL CLÁSICO (FONDO BLANCO Y ALTURA DINÁMICA) */}
             <div className="w-full rounded-[30px] sm:rounded-[34px] overflow-hidden shadow-2xl bg-white border border-black/10 my-3">
               
-              {/* CABECERA CON DEGRADADO NARANJA UNFV + ICONO DE LA URRACA */}
-              <div className="bg-gradient-to-b from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-5 pt-5 pb-4 text-center text-white relative">
+              {/* CABECERA CON DEGRADADO NARANJA UNFV + ICONO DE LA URRACA AL COSTADO */}
+              <div className="bg-gradient-to-r from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-4 sm:px-6 py-3.5 sm:py-4 text-white relative flex items-center justify-center gap-3 sm:gap-4">
                 
-                {/* Icono de la Urraca (foto icono.jpg con tamaño exacto y compacto) */}
-                <div className="w-12 h-12 min-w-[48px] max-w-[48px] min-h-[48px] max-h-[48px] mx-auto rounded-full bg-[#110e0c] border-2 border-white shadow-md overflow-hidden flex items-center justify-center mb-1.5 flex-shrink-0">
+                {/* Icono de la Urraca a la izquierda (foto icono.jpg) */}
+                <div className="w-12 h-12 min-w-[48px] max-w-[48px] min-h-[48px] max-h-[48px] rounded-full bg-[#110e0c] border-2 border-white shadow-md overflow-hidden flex items-center justify-center flex-shrink-0">
                   {!iconFailedAll ? (
                     <img 
                       src={ICON_FORMATS[iconFormatIdx]} 
@@ -737,16 +737,18 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Textos del Encabezado NGL */}
-                <div className="text-[12px] sm:text-[13px] font-extrabold text-white tracking-wide uppercase drop-shadow-sm">
-                  Send me anonymous
-                </div>
-                <div className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center justify-center gap-1.5 drop-shadow-md">
-                  <span>Confessions</span>
-                  <span className="text-amber-300 text-lg">😇</span>
-                </div>
-                <div className="mt-1.5 inline-flex items-center gap-1 bg-black/25 backdrop-blur-sm text-white font-bold text-[11px] px-3 py-0.5 rounded-full border border-white/20">
-                  <span>@urracavillarrealina</span>
+                {/* Textos del Encabezado NGL a la derecha */}
+                <div className="text-left flex flex-col justify-center">
+                  <div className="text-[11px] sm:text-[12px] font-extrabold text-white/95 uppercase tracking-wide leading-tight">
+                    Send me anonymous
+                  </div>
+                  <div className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-1.5 leading-tight drop-shadow-sm">
+                    <span>Confessions</span>
+                    <span className="text-amber-300 text-base">😇</span>
+                  </div>
+                  <div className="mt-0.5 inline-flex items-center gap-1 bg-black/20 backdrop-blur-sm text-white font-bold text-[10.5px] px-2.5 py-0.5 rounded-full border border-white/20 w-fit">
+                    <span>@urracavillarrealina</span>
+                  </div>
                 </div>
               </div>
 
