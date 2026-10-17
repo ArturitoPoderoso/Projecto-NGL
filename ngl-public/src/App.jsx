@@ -258,10 +258,12 @@ export default function App() {
                 </div>
               )}
 
-              {/* Candado: q&a anónimas */}
+              {/* Candado: q&a anónimas efímeras */}
               <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm text-slate-200 font-medium pt-0.5">
                 <span className="text-amber-400 text-sm">🔒</span>
                 <span>q&a anónimas</span>
+                <span className="text-white/30">•</span>
+                <span className="text-slate-400 text-xs">duran 24h</span>
               </div>
 
               {/* Botón Principal: ¡Enviar! */}

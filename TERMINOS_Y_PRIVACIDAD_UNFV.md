@@ -58,6 +58,11 @@ Para garantizar que nadie pueda saber quién eres:
 En cumplimiento de la legislación peruana sobre protección de datos personales:
 * Los usuarios tienen derecho a exigir que ninguna información de carácter personal identificable sobre su persona sea publicada ni mantenida en el historial público del servicio.
 
+### 2.4. Política de Retención Efímera (Autodestrucción a las 24 Horas)
+Para maximizar la privacidad y optimizar el almacenamiento:
+* Todas las confesiones recibidas tienen una **vigencia máxima de 24 horas** a partir del momento exacto de su envío.
+* Transcurrido dicho plazo, el sistema ejecuta rutinas automáticas de depuración y eliminación irreversible en la base de datos, garantizando que los mensajes no queden archivados indefinidamente.
+
 ---
 
 ## 3. ACEPTACIÓN PLENA

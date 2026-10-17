@@ -41,11 +41,12 @@ NGL PROJECT/
 
 1. Ve a tu panel de control en [Supabase](https://supabase.com/) y abre tu proyecto (o crea uno nuevo gratuito).
 2. En la barra lateral izquierda, entra al **SQL Editor**.
-3. Haz clic en **New Query**, pega el contenido del archivo `supabase_schema.sql` y presiona **Run**:
+3. Haz clic en **New Query**, pega el contenido del archivo `supabase_schema.sql` (o `supabase_limpieza_24h.sql` si ya tenías la tabla creada) y presiona **Run**:
    - Crea la tabla `mensajes` con columnas `id`, `contenido`, `fecha_creacion`.
    - Activa **Row Level Security (RLS)**.
    - Crea las políticas de seguridad para permitir `INSERT` público anónimo y `SELECT`/`DELETE` en el Dashboard.
    - Habilita la publicación de **Supabase Realtime** (`ALTER PUBLICATION supabase_realtime ADD TABLE public.mensajes;`).
+   - Configura la **Autodestrucción Automática de Confesiones a las 24 horas** (Trigger + función `auto_eliminar_confesiones_24h`) para mantener la base de datos libre de saturación.
 4. Ve a **Project Settings** -> **API** y copia:
    - **Project URL** (ej: `https://abcdefg.supabase.co`)
    - **anon / public key** (ej: `eyJhbGciOi...`)
