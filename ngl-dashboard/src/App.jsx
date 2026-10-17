@@ -723,8 +723,8 @@ export default function App() {
               {/* CABECERA CON DEGRADADO NARANJA UNFV + ICONO DE LA URRACA */}
               <div className="bg-gradient-to-b from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-5 pt-5 pb-4 text-center text-white relative">
                 
-                {/* Icono de la Urraca (foto icono.jpg) */}
-                <div className="w-13 h-13 sm:w-15 sm:h-15 mx-auto rounded-full bg-[#110e0c] border-[2.5px] border-white shadow-md overflow-hidden flex items-center justify-center mb-2">
+                {/* Icono de la Urraca (foto icono.jpg con tamaño exacto y compacto) */}
+                <div className="w-12 h-12 min-w-[48px] max-w-[48px] min-h-[48px] max-h-[48px] mx-auto rounded-full bg-[#110e0c] border-2 border-white shadow-md overflow-hidden flex items-center justify-center mb-1.5 flex-shrink-0">
                   {!iconFailedAll ? (
                     <img 
                       src={ICON_FORMATS[iconFormatIdx]} 
@@ -733,7 +733,7 @@ export default function App() {
                       className="w-full h-full object-cover" 
                     />
                   ) : (
-                    <span className="text-2xl">🤫</span>
+                    <span className="text-xl">🤫</span>
                   )}
                 </div>
 
