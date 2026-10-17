@@ -6,7 +6,6 @@ import UnfvBuilding from './components/UnfvBuilding';
 import { 
   Lock, 
   MessageSquare, 
-  RefreshCw, 
   Copy, 
   Check, 
   Trash2, 
@@ -439,11 +438,12 @@ export default function App() {
           {/* Acciones de la barra */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={fetchMensajes}
-              className="p-2 rounded-full bg-[#261e1b] hover:bg-[#3d332f] border border-white/10 text-slate-300 hover:text-white transition-all cursor-pointer shadow-sm"
-              title="Actualizar mensajes"
+              onClick={handleLock}
+              className="flex items-center gap-1.5 text-xs font-bold bg-[#141210] hover:bg-red-500/20 hover:text-red-300 border border-white/10 hover:border-red-500/30 px-3.5 py-2 rounded-full text-slate-300 transition-all cursor-pointer shadow-sm"
+              title="Bloquear panel / Cerrar sesión"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-[#f55f15]' : ''}`} />
+              <Lock className="w-3.5 h-3.5 text-slate-400" />
+              <span>Bloquear</span>
             </button>
           </div>
         </div>
