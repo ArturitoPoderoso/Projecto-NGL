@@ -18,7 +18,7 @@ import {
 const ICON_FORMATS = ['/icono.png', '/icono.jpg', '/icono.jpeg', '/icono.webp', '/icono.svg'];
 
 // Enlace a la página de Facebook (configurable vía VITE_FACEBOOK_URL o directo aquí)
-const FACEBOOK_URL = import.meta.env.VITE_FACEBOOK_URL || 'https://www.facebook.com';
+const FACEBOOK_URL = import.meta.env.VITE_FACEBOOK_URL || 'https://www.facebook.com/share/1J512MvEUY/';
 
 // Preguntas sugeridas para rotar con el dado 🎲 (estilo UNFV / NGL)
 const VILLARREAL_PROMPTS = [
