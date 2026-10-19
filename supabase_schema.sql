@@ -91,3 +91,15 @@ END $$;
 -- Mensaje de confirmación:
 COMMENT ON TABLE public.mensajes IS 'Tabla de mensajes anónimos estilo NGL con autodestrucción a las 24 horas';
 
+-- ========================================================
+-- 9. FUNCIÓN RPC PARA VERIFICAR CONTRASEÑA EN SUPABASE
+-- ========================================================
+-- La contraseña se almacena y verifica EXCLUSIVAMENTE en la base de datos de Supabase.
+-- Reemplaza 'TU_CONTRASENA_SECRETA_AQUI' con la clave que tú elijas en tu panel de Supabase.
+CREATE OR REPLACE FUNCTION public.verificar_pin(pin_ingresado text)
+RETURNS boolean AS $$
+BEGIN
+    RETURN pin_ingresado = 'TU_CONTRASENA_SECRETA_AQUI';
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+

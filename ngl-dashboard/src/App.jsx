@@ -90,7 +90,7 @@ export default function App() {
     }
   };
 
-  // 1. Desbloqueo verificando CONTRASEÑA EN LA BASE DE DATOS DE SUPABASE (SIN QUEMAR EN EL CÓDIGO)
+  // 1. Desbloqueo del Dashboard exclusivamente mediante Supabase RPC (100% en Base de Datos)
   const handleUnlock = async (e) => {
     if (e) e.preventDefault();
     const cleanPass = pinInput.trim();
@@ -100,12 +100,14 @@ export default function App() {
     setPinError(false);
 
     try {
-      // Consulta a la función RPC segura en la base de datos de Supabase
+      // Verificación directa y segura en la base de datos de Supabase
+      // La contraseña NUNCA está en el código del frontend
       const { data, error } = await supabase.rpc('verificar_pin', { pin_ingresado: cleanPass });
       
       if (error) {
-        console.warn('RPC verificar_pin respondió con error:', error);
-        throw error;
+        console.error('Error al consultar verificar_pin en Supabase:', error);
+        setPinError(true);
+        return;
       }
 
       if (data === true) {
@@ -117,16 +119,8 @@ export default function App() {
         setPinError(true);
       }
     } catch (err) {
-      console.error('Error al validar con Supabase:', err);
-      // Contingencia local si todavía no han puesto la anon key en el .env
-      if (cleanPass === 'ARTURO4321@luis') {
-        setIsAuthenticated(true);
-        sessionStorage.setItem('ngl_admin_auth', 'true');
-        setPinError(false);
-        setPinInput('');
-      } else {
-        setPinError(true);
-      }
+      console.error('Error de conexión con Supabase:', err);
+      setPinError(true);
     } finally {
       setVerifyingPin(false);
     }

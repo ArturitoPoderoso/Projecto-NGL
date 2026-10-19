@@ -23,13 +23,13 @@ NGL PROJECT/
 │       └── lib/supabase.js     # Cliente Supabase (solo INSERT)
 │
 └── ngl-dashboard/              # PROYECTO 2: Dashboard Privado (Para recibir mensajes)
-    ├── .env.example            # Ejemplo de variables de entorno (con VITE_ADMIN_PIN)
+    ├── .env.example            # Ejemplo de variables de entorno
     ├── index.html
     ├── package.json
     ├── tailwind.config.js
     ├── vercel.json             # Configuración de rewrite para Vercel
     └── src/
-        ├── App.jsx             # Lock screen con PIN, Realtime instantáneo, Grid responsivo y sonido
+        ├── App.jsx             # Lock screen seguro con verificación en Supabase, Realtime y Grid responsivo
         ├── index.css           # Estilos oscuros y custom scrollbar
         ├── lib/supabase.js     # Cliente Supabase con suscripción Realtime
         └── utils/timeAgo.js    # Formato de tiempo relativo ("Hace 5 min", "Ayer")
@@ -47,6 +47,7 @@ NGL PROJECT/
    - Crea las políticas de seguridad para permitir `INSERT` público anónimo y `SELECT`/`DELETE` en el Dashboard.
    - Habilita la publicación de **Supabase Realtime** (`ALTER PUBLICATION supabase_realtime ADD TABLE public.mensajes;`).
    - Configura la **Autodestrucción Automática de Confesiones a las 24 horas** (Trigger + función `auto_eliminar_confesiones_24h`) para mantener la base de datos libre de saturación.
+   - Configura la **Función de autenticación en la base de datos** (`verificar_pin`) con tu clave secreta personal.
 4. Ve a **Project Settings** -> **API** y copia:
    - **Project URL** (ej: `https://abcdefg.supabase.co`)
    - **anon / public key** (ej: `eyJhbGciOi...`)
@@ -73,11 +74,10 @@ npm install
 # Crea o edita el archivo .env:
 # VITE_SUPABASE_URL=https://TU_PROYECTO.supabase.co
 # VITE_SUPABASE_ANON_KEY=TU_ANON_KEY
-# VITE_ADMIN_PIN=1234
 npm run dev
 ```
 Abre en tu navegador: `http://localhost:5174`
-- Ingresa el PIN (por defecto: `1234`) y verás la bandeja de entrada.
+- Ingresa tu contraseña secreta (validada directamente por la base de datos de Supabase) y verás la bandeja de entrada.
 - ¡Envía un mensaje desde la pestaña del Proyecto 1 y observa cómo aparece al instante en el Proyecto 2 con sonido de notificación y sin recargar la página!
 
 ---
@@ -102,7 +102,6 @@ Para desplegarlos de forma independiente en Vercel sin subdominios:
 3. En **Environment Variables**, añade:
    - `VITE_SUPABASE_URL`: Tu URL de Supabase (la misma).
    - `VITE_SUPABASE_ANON_KEY`: Tu Anon Key de Supabase (la misma).
-   - `VITE_ADMIN_PIN`: Tu PIN secreto personal (ej: `5829`).
 4. Haz clic en **Deploy**. Obtendrás un dominio independiente como: `ngl-inbox-privado.vercel.app`.
 
 ---
