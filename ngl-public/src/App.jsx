@@ -17,6 +17,9 @@ import {
 // Formatos soportados para la imagen "icono" (png, jpg, jpeg, webp, svg)
 const ICON_FORMATS = ['/icono.png', '/icono.jpg', '/icono.jpeg', '/icono.webp', '/icono.svg'];
 
+// Enlace a la página de Facebook (configurable vía VITE_FACEBOOK_URL o directo aquí)
+const FACEBOOK_URL = import.meta.env.VITE_FACEBOOK_URL || 'https://www.facebook.com';
+
 // Preguntas sugeridas para rotar con el dado 🎲 (estilo UNFV / NGL)
 const VILLARREAL_PROMPTS = [
   '¿te gusta alguien en este momento?',
@@ -283,6 +286,24 @@ export default function App() {
                 )}
               </button>
 
+              {/* Botón: Página de Facebook */}
+              <a
+                href={FACEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 sm:py-4 px-6 rounded-full font-black text-white text-lg sm:text-xl tracking-wide bg-[#1877F2] hover:bg-[#166fe5] active:scale-[0.98] hover:shadow-blue-500/30 transition-all shadow-xl shadow-blue-950/40 flex items-center justify-center gap-2.5 cursor-pointer no-underline group select-none"
+              >
+                {/* Icono oficial de Facebook */}
+                <svg
+                  className="w-5 h-5 sm:w-6 sm:h-6 fill-white transition-transform group-hover:scale-110 flex-shrink-0"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+                <span>Página de Facebook</span>
+              </a>
+
             </div>
           ) : (
             /* Pantalla de Éxito */
@@ -294,13 +315,30 @@ export default function App() {
               <p className="text-xs sm:text-sm text-slate-300 mb-6">
                 Tu mensaje anónimo ha sido entregado a <strong>@urracavillarrealina</strong> con éxito y total privacidad.
               </p>
-              <button
-                onClick={handleReset}
-                className="w-full py-3.5 px-6 rounded-full font-bold text-white bg-[#f55f15] hover:bg-[#e04f08] transition-all flex items-center justify-center gap-2 shadow-lg"
-              >
-                <RotateCcw className="w-4 h-4" />
-                <span>Enviar otra confesión</span>
-              </button>
+              <div className="space-y-3">
+                <button
+                  onClick={handleReset}
+                  className="w-full py-3.5 px-6 rounded-full font-bold text-white bg-[#f55f15] hover:bg-[#e04f08] transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  <span>Enviar otra confesión</span>
+                </button>
+                <a
+                  href={FACEBOOK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 px-6 rounded-full font-bold text-white bg-[#1877F2] hover:bg-[#166fe5] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-950/40 no-underline cursor-pointer group"
+                >
+                  <svg
+                    className="w-4 h-4 fill-white transition-transform group-hover:scale-110 flex-shrink-0"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                  <span>Página de Facebook</span>
+                </a>
+              </div>
             </div>
           )}
         </main>
