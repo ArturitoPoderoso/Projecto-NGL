@@ -24,6 +24,7 @@ const ICON_FORMATS = ['/icono.png', '/icono.jpg', '/icono.jpeg', '/icono.webp', 
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => sessionStorage.getItem('ngl_admin_auth') === 'true');
+  const [adminPin, setAdminPin] = useState(() => sessionStorage.getItem('ngl_admin_pin') || '');
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
   const [verifyingPin, setVerifyingPin] = useState(false);
@@ -112,9 +113,12 @@ export default function App() {
 
       if (data === true) {
         setIsAuthenticated(true);
+        setAdminPin(cleanPass);
         sessionStorage.setItem('ngl_admin_auth', 'true');
+        sessionStorage.setItem('ngl_admin_pin', cleanPass);
         setPinError(false);
         setPinInput('');
+        fetchMensajes(cleanPass);
       } else {
         setPinError(true);
       }
@@ -128,39 +132,32 @@ export default function App() {
 
   const handleLock = () => {
     setIsAuthenticated(false);
+    setAdminPin('');
     sessionStorage.removeItem('ngl_admin_auth');
+    sessionStorage.removeItem('ngl_admin_pin');
   };
 
-  // 2. Cargar Mensajes de Supabase (Solo últimas 24 horas y limpieza automática)
-  const fetchMensajes = async () => {
+  // 2. Cargar Mensajes de Supabase mediante RPC seguro (Solo con el PIN correcto)
+  const fetchMensajes = async (pinOverride) => {
+    const pinToUse = pinOverride || adminPin || sessionStorage.getItem('ngl_admin_pin');
+    if (!pinToUse) return;
+
     setLoading(true);
     try {
-      const hace24Horas = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-
-      // Limpieza en segundo plano de cualquier confesión expirada (> 24h) para no ocupar espacio
-      supabase
-        .from('mensajes')
-        .delete()
-        .lt('fecha_creacion', hace24Horas)
-        .then(() => {})
-        .catch(() => {});
-
-      const { data, error } = await supabase
-        .from('mensajes')
-        .select('*')
-        .gte('fecha_creacion', hace24Horas)
-        .order('fecha_creacion', { ascending: false });
+      const { data, error } = await supabase.rpc('obtener_mensajes_admin', {
+        pin_ingresado: pinToUse
+      });
 
       if (error) throw error;
       setMensajes(data || []);
     } catch (err) {
-      console.error('Error cargando mensajes:', err);
+      console.error('Error cargando mensajes protegidos:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  // 3. Supabase Realtime
+  // 3. Supabase Realtime + Polling seguro
   useEffect(() => {
     if (!isAuthenticated) return;
     fetchMensajes();
@@ -170,18 +167,20 @@ export default function App() {
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'mensajes' },
-        (payload) => {
-          setMensajes((prev) => [payload.new, ...prev]);
-          setNewestMessageId(payload.new.id);
+        () => {
+          fetchMensajes();
           playNotificationSound();
-          setTimeout(() => setNewestMessageId(null), 5000);
         }
       )
       .on(
         'postgres_changes',
         { event: 'DELETE', schema: 'public', table: 'mensajes' },
         (payload) => {
-          setMensajes((prev) => prev.filter((m) => m.id !== payload.old.id));
+          if (payload.old?.id) {
+            setMensajes((prev) => prev.filter((m) => m.id !== payload.old.id));
+          } else {
+            fetchMensajes();
+          }
         }
       )
       .subscribe((status) => {
@@ -197,7 +196,7 @@ export default function App() {
       clearInterval(pollInterval);
       supabase.removeChannel(channel);
     };
-  }, [isAuthenticated]);
+  }, [isAuthenticated, adminPin]);
 
   // Toggle Favorito
   const toggleFavorite = (id) => {
@@ -215,16 +214,23 @@ export default function App() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  // Eliminar Mensaje
+  // Eliminar Mensaje mediante RPC seguro
   const handleDeleteMessage = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar esta confesión de forma permanente?')) return;
-    try {
-      const { error } = await supabase
-        .from('mensajes')
-        .delete()
-        .eq('id', id);
+    const pinToUse = adminPin || sessionStorage.getItem('ngl_admin_pin');
+    if (!pinToUse) {
+      alert('Sesión expirada. Por favor vuelve a ingresar tu PIN.');
+      handleLock();
+      return;
+    }
 
-      if (error) throw error;
+    try {
+      const { data, error } = await supabase.rpc('eliminar_mensaje_admin', {
+        pin_ingresado: pinToUse,
+        mensaje_id: id
+      });
+
+      if (error || !data) throw error || new Error('No autorizado');
       setMensajes((prev) => prev.filter((m) => m.id !== id));
     } catch (err) {
       console.error('Error eliminando mensaje:', err);
