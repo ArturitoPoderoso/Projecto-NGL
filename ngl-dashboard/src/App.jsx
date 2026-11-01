@@ -4,6 +4,10 @@ import { timeAgo } from './utils/timeAgo';
 import UnfvLogo from './components/UnfvLogo';
 import UnfvBuilding from './components/UnfvBuilding';
 import { 
+  ChristmasStickerDecorations, 
+  ChristmasWhiteBodyDecorations 
+} from './components/ChristmasSticker';
+import { 
   Lock, 
   MessageSquare, 
   Copy, 
@@ -660,7 +664,7 @@ export default function App() {
           }}
           className="fixed inset-0 z-50 backdrop-blur-md bg-black/80 flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fade-in"
         >
-          {/* RECUADRO BLANCO CON SCROLL SEGURO EN CELULAR */}
+          {/* RECUADRO MODAL BLANCO ORIGINAL */}
           <div className="bg-white rounded-[28px] sm:rounded-[36px] p-4 sm:p-7 max-w-sm sm:max-w-md w-full shadow-2xl border border-slate-100 relative my-auto max-h-[92dvh] flex flex-col justify-between overflow-y-auto">
             <button
               onClick={() => {
@@ -678,50 +682,72 @@ export default function App() {
               <p className="text-[11px] sm:text-xs text-slate-500 font-medium">Toma captura de pantalla o cópialo</p>
             </div>
 
-            {/* CONTENEDOR DEL STICKER NGL CLÁSICO */}
-            <div className="w-full rounded-[24px] sm:rounded-[34px] overflow-hidden shadow-2xl shadow-black/20 bg-white border-2 border-slate-800/40 my-2">
+            {/* CONTENEDOR DEL STICKER CON BORDE GRIS/AZULADO DEFINIDO Y SOMBRA CLARA (IDÉNTICO AL ORIGINAL) */}
+            <div className="w-full rounded-[24px] sm:rounded-[34px] overflow-hidden shadow-xl shadow-slate-300/60 bg-white border-[2.5px] border-slate-300 my-2.5 relative">
               
-              {/* CABECERA CON DEGRADADO NARANJA */}
-              <div className="bg-gradient-to-r from-[#f55f15] via-[#ff6a1a] to-[#ea580c] px-3.5 sm:px-6 py-3 sm:py-4 text-white relative flex items-center justify-center gap-2.5 sm:gap-4">
+              {/* CABECERA ROJA NAVIDEÑA */}
+              <div className="bg-[#d91424] px-4 sm:px-6 py-4 text-white relative flex items-center justify-center gap-3 sm:gap-4 overflow-hidden border-b-[2px] border-slate-300">
                 
-                {/* Icono de la Urraca a la izquierda */}
-                <div className="w-10 h-10 sm:w-12 sm:h-12 min-w-[40px] sm:min-w-[48px] max-w-[40px] sm:max-w-[48px] rounded-full bg-[#110e0c] border-2 border-white shadow-md overflow-hidden flex items-center justify-center flex-shrink-0">
-                  {!iconFailedAll ? (
-                    <img 
-                      src={ICON_FORMATS[iconFormatIdx]} 
-                      alt="Urraca" 
-                      onError={handleIconError} 
-                      className="w-full h-full object-cover" 
-                    />
-                  ) : (
-                    <span className="text-lg sm:text-xl">🤫</span>
-                  )}
+                {/* Copos y puntos de nieve en cabecera roja */}
+                <ChristmasStickerDecorations />
+
+                {/* Icono de la Urraca con Sombrerito de Santa */}
+                <div className="relative flex-shrink-0 z-10">
+                  {/* Sombrerito de Papá Noel sobre el avatar */}
+                  <img
+                    src="/gorro-santa.png"
+                    alt="Gorro Santa"
+                    className="absolute -top-3 -left-3 w-8 sm:w-9 h-7 sm:h-8 object-contain z-20 pointer-events-none drop-shadow-md transform -rotate-6"
+                  />
+
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 min-w-[48px] sm:min-w-[56px] max-w-[48px] sm:max-w-[56px] rounded-full bg-[#110e0c] border-[2.5px] border-white shadow-md overflow-hidden flex items-center justify-center">
+                    {!iconFailedAll ? (
+                      <img 
+                        src={ICON_FORMATS[iconFormatIdx]} 
+                        alt="Urraca" 
+                        onError={handleIconError} 
+                        className="w-full h-full object-cover" 
+                      />
+                    ) : (
+                      <span className="text-xl sm:text-2xl">🤫</span>
+                    )}
+                  </div>
                 </div>
 
-                {/* Textos del Encabezado NGL */}
-                <div className="text-left flex flex-col justify-center">
-                  <div className="text-[10px] sm:text-[12px] font-extrabold text-white/95 uppercase tracking-wide leading-tight">
-                    Send me anonymous
+                {/* Textos del Encabezado Navideño */}
+                <div className="text-left flex flex-col justify-center relative z-10">
+                  <div className="text-[11px] sm:text-[13px] font-black text-white uppercase tracking-wider leading-tight">
+                    SEND ME ANONYMOUS
                   </div>
-                  <div className="text-lg sm:text-2xl font-black text-white tracking-tight flex items-center gap-1.5 leading-tight drop-shadow-sm">
+                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-1.5 leading-none drop-shadow-sm my-0.5">
                     <span>Confessions</span>
-                    <span className="text-amber-300 text-sm sm:text-base">😇</span>
+                    <span className="text-amber-300 text-lg sm:text-xl">😇</span>
                   </div>
-                  <div className="mt-0.5 inline-flex items-center gap-1 bg-black/20 backdrop-blur-sm text-white font-bold text-[9.5px] sm:text-[10.5px] px-2 py-0.5 rounded-full border border-white/20 w-fit">
+                  <div className="mt-1 inline-flex items-center gap-1 bg-black/40 text-white font-bold text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded-full border border-white/20 w-fit">
                     <span>@urracavillarrealina</span>
                   </div>
                 </div>
               </div>
 
-              {/* CUERPO BLANCO */}
-              <div className="bg-white p-4 sm:p-8 min-h-[110px] sm:min-h-[140px] flex items-center justify-center text-center">
-                <p className="text-black font-extrabold text-base sm:text-2xl leading-snug break-words whitespace-pre-wrap select-text w-full">
+              {/* CUERPO BLANCO 100% LIMPIO (ESPACIO DEDICADO AL TEXTO) */}
+              <div className="bg-white p-5 sm:p-8 min-h-[120px] sm:min-h-[150px] max-h-[360px] overflow-y-auto flex items-center justify-center text-center">
+                <p 
+                  className={`text-black font-extrabold leading-snug break-words whitespace-pre-wrap select-text w-full ${
+                    storyModalMessage.contenido.length > 250
+                      ? 'text-sm sm:text-base font-bold'
+                      : storyModalMessage.contenido.length > 120
+                      ? 'text-base sm:text-xl'
+                      : storyModalMessage.contenido.length > 50
+                      ? 'text-lg sm:text-2xl'
+                      : 'text-xl sm:text-3xl'
+                  }`}
+                >
                   {storyModalMessage.contenido}
                 </p>
               </div>
             </div>
 
-            {/* Botones de acción dentro del modal en móvil */}
+            {/* Botones de acción dentro del modal */}
             <div className="mt-3 flex items-center gap-2 pt-1">
               <button
                 onClick={() => {
