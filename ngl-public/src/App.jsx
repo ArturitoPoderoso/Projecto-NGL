@@ -4,6 +4,10 @@ import confetti from 'canvas-confetti';
 import UnfvLogo from './components/UnfvLogo';
 import UnfvBuilding from './components/UnfvBuilding';
 import { 
+  SnowFallingEffect, 
+  SantaHatOverlay 
+} from './components/ChristmasDecorations';
+import { 
   Send, 
   Lock, 
   CheckCircle2, 
@@ -87,10 +91,10 @@ export default function App() {
       if (error) throw error;
 
       confetti({
-        particleCount: 90,
-        spread: 80,
+        particleCount: 110,
+        spread: 90,
         origin: { y: 0.6 },
-        colors: ['#f55f15', '#ff9800', '#ffffff', '#e04f08']
+        colors: ['#dc2626', '#16a34a', '#ffd700', '#ffffff', '#f55f15'] // Rojo navideño, verde pino, dorado, blanco nieve y naranja villarrealino
       });
 
       setEnviado(true);
@@ -112,6 +116,11 @@ export default function App() {
     <div className="min-h-[100dvh] w-full unfv-bg flex flex-col justify-between items-center px-4 py-3 sm:py-6 md:py-8 text-white relative overflow-x-hidden select-none">
       
       {/* ======================================================== */}
+      {/* DECORACIÓN NAVIDEÑA (Copos de nieve cayendo sutilmente) */}
+      {/* ======================================================== */}
+      <SnowFallingEffect />
+      
+      {/* ======================================================== */}
       {/* 1. IMAGEN DE LA FACULTAD (ESQUINA INFERIOR IZQUIERDA) */}
       {/* Archivo: ngl-public/public/facultad.png */}
       {/* ======================================================== */}
@@ -120,20 +129,20 @@ export default function App() {
           src="/facultad.png" 
           alt="Facultad UNFV" 
           onError={() => setFacultadError(true)}
-          className="pointer-events-none z-0 fixed left-[-8px] bottom-1 sm:left-4 sm:bottom-2 md:left-8 md:bottom-4 w-32 sm:w-44 md:w-64 max-h-48 md:max-h-60 object-contain opacity-90 transition-all select-none" 
+          className="pointer-events-none z-10 fixed left-[-8px] bottom-1 sm:left-4 sm:bottom-2 md:left-8 md:bottom-4 w-32 sm:w-44 md:w-64 max-h-48 md:max-h-60 object-contain opacity-90 transition-all select-none" 
         />
       ) : (
-        <UnfvBuilding className="fixed left-[-10px] bottom-1 sm:left-4 sm:bottom-2 md:left-8 md:bottom-4 w-32 h-28 sm:w-40 sm:h-36 md:w-60 md:h-52 z-0 opacity-90 transition-all" />
+        <UnfvBuilding className="fixed left-[-10px] bottom-1 sm:left-4 sm:bottom-2 md:left-8 md:bottom-4 w-32 h-28 sm:w-40 sm:h-36 md:w-60 md:h-52 z-10 opacity-90 transition-all" />
       )}
 
       {/* ======================================================== */}
       {/* 2. LEMA "ORGULLO VILLAREALINO" (ESQUINA INFERIOR DERECHA) */}
       {/* ======================================================== */}
-      <div className="pointer-events-none z-0 fixed right-3 bottom-3 sm:right-6 sm:bottom-4 md:right-10 md:bottom-6 rotate-[-8deg] text-right transition-all">
-        <span className="font-handwriting text-2xl sm:text-3xl md:text-4xl font-bold text-[#f55f15] tracking-wide block drop-shadow-md leading-tight">
+      <div className="pointer-events-none z-10 fixed right-3 bottom-3 sm:right-6 sm:bottom-4 md:right-10 md:bottom-6 rotate-[-8deg] text-right transition-all">
+        <span className="font-handwriting text-2xl sm:text-3xl md:text-4xl font-bold text-[#f55f15] tracking-wide block drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] leading-tight">
           Orgullo<br />Villarealino
         </span>
-        <svg className="w-24 sm:w-28 md:w-36 h-3 sm:h-4 text-[#f55f15] mt-[-4px] ml-auto" viewBox="0 0 100 12" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round">
+        <svg className="w-24 sm:w-28 md:w-36 h-3 sm:h-4 text-[#f55f15] mt-[-4px] ml-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 100 12" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round">
           <path d="M 5 6 Q 50 12 95 4" />
         </svg>
       </div>
@@ -179,43 +188,59 @@ export default function App() {
           {!enviado ? (
             <div className="space-y-3.5 sm:space-y-4">
               
-              {/* TARJETA DIVIDIDA (100% IGUAL AL SCREENSHOT) */}
-              <div className="w-full rounded-[26px] sm:rounded-[30px] overflow-hidden shadow-2xl shadow-black/90 border border-white/5 transition-transform duration-300 hover:shadow-orange-950/20">
+              {/* TARJETA DIVIDIDA (100% IGUAL AL SCREENSHOT + DETALLES NAVIDEÑOS SUTILES) */}
+              <div className="w-full rounded-[26px] sm:rounded-[30px] overflow-hidden shadow-2xl shadow-black/90 border-t-2 border-white/30 border-x border-b border-white/10 transition-transform duration-300 hover:shadow-orange-950/20 backdrop-blur-sm relative">
                 
-                {/* Cabecera de la Tarjeta: Naranja NGL */}
-                <div className="bg-[#f55f15] px-4 sm:px-5 py-3 sm:py-3.5 flex items-center gap-3.5">
+                {/* Cabecera de la Tarjeta: Naranja NGL con Luces Minúsculas Integradas */}
+                <div className="bg-[#f55f15] px-4 sm:px-5 py-3 sm:py-3.5 flex items-center justify-between gap-3.5 relative overflow-hidden">
                   
-                  {/* ======================================================== */}
-                  {/* AVATAR / ICONO PERSONALIZADO: "icono.png" (o jpg, webp) */}
-                  {/* Archivo: ngl-public/public/icono.png */}
-                  {/* ======================================================== */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#110e0c] flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden border border-black/20">
-                    {!iconFailedAll ? (
-                      <img 
-                        src={ICON_FORMATS[iconFormatIdx]} 
-                        alt="Icono" 
-                        onError={handleIconError}
-                        className="w-full h-full object-cover select-none" 
-                      />
-                    ) : (
-                      /* Fallback gráfico SVG del espía en caso de que no haya imagen */
-                      <svg viewBox="0 0 36 36" className="w-7 h-7 sm:w-8 sm:h-8 fill-white" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 6 15 C 8 15 11 13 18 13 C 25 13 28 15 30 15 C 32 15 32 13 28 12 C 26 10 24 5 18 5 C 12 5 10 10 8 12 C 4 13 4 15 6 15 Z" />
-                        <circle cx="12" cy="22" r="4.5" />
-                        <circle cx="24" cy="22" r="4.5" />
-                        <rect x="15" y="20.5" width="6" height="3" rx="1.5" />
-                        <path d="M 7 30 L 14 27 L 18 31 L 22 27 L 29 30 L 31 34 L 5 34 Z" opacity="0.9" />
-                      </svg>
-                    )}
+                  {/* Minifocos cálidos decorativos en el borde superior de la barra */}
+                  <div className="absolute top-1 right-3 flex items-center gap-2 pointer-events-none select-none opacity-85">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-200 animate-glow-warm drop-shadow-[0_0_4px_#ffd56b]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-300 animate-glow-alt drop-shadow-[0_0_4px_#ff4d4d]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-glow-warm drop-shadow-[0_0_4px_#6ee7b7]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-100 animate-glow-alt drop-shadow-[0_0_4px_#fef3c7]" />
                   </div>
 
-                  {/* Nombre y subtítulo */}
-                  <div className="leading-tight text-black">
-                    <div className="font-extrabold text-[15px] sm:text-base tracking-tight">
-                      @urracavillarrealina
+                  <div className="flex items-center gap-3.5">
+                    {/* ======================================================== */}
+                    {/* AVATAR / ICONO PERSONALIZADO CON GORRO NAVIDEÑO */}
+                    {/* Archivo: ngl-public/public/icono.png */}
+                    {/* ======================================================== */}
+                    <div className="relative flex-shrink-0">
+                      {/* Gorrito de Papá Noel sobre el avatar bien calibrado */}
+                      <SantaHatOverlay className="absolute -top-3.5 -left-3.5 w-9 sm:w-10 h-8 sm:h-9 z-20 pointer-events-none drop-shadow-lg transform -rotate-6" />
+
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#110e0c] flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden border border-black/20">
+                        {!iconFailedAll ? (
+                          <img 
+                            src={ICON_FORMATS[iconFormatIdx]} 
+                            alt="Icono" 
+                            onError={handleIconError}
+                            className="w-full h-full object-cover select-none" 
+                          />
+                        ) : (
+                          /* Fallback gráfico SVG del espía en caso de que no haya imagen */
+                          <svg viewBox="0 0 36 36" className="w-7 h-7 sm:w-8 sm:h-8 fill-white" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 6 15 C 8 15 11 13 18 13 C 25 13 28 15 30 15 C 32 15 32 13 28 12 C 26 10 24 5 18 5 C 12 5 10 10 8 12 C 4 13 4 15 6 15 Z" />
+                            <circle cx="12" cy="22" r="4.5" />
+                            <circle cx="24" cy="22" r="4.5" />
+                            <rect x="15" y="20.5" width="6" height="3" rx="1.5" />
+                            <path d="M 7 30 L 14 27 L 18 31 L 22 27 L 29 30 L 31 34 L 5 34 Z" opacity="0.9" />
+                          </svg>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-[12px] sm:text-[13px] font-semibold text-black/90">
-                      send me anonymous confessions
+
+                    {/* Nombre y subtítulo */}
+                    <div className="leading-tight text-black">
+                      <div className="font-extrabold text-[15px] sm:text-base tracking-tight flex items-center gap-1">
+                        <span>@urracavillarrealina</span>
+                        <span className="text-xs">✨</span>
+                      </div>
+                      <div className="text-[12px] sm:text-[13px] font-semibold text-black/90">
+                        send me anonymous confessions
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -269,7 +294,7 @@ export default function App() {
                 <span className="text-slate-400 text-xs">duran 24h</span>
               </div>
 
-              {/* Botón Principal: ¡Enviar! */}
+              {/* Botón Principal: ¡Enviar confesión! 🎁 */}
               <button
                 type="button"
                 onClick={handleSubmit}
@@ -282,7 +307,10 @@ export default function App() {
                     <span>Enviando...</span>
                   </>
                 ) : (
-                  <span>¡Enviar!</span>
+                  <span className="flex items-center gap-2">
+                    <span>¡Enviar confesión!</span>
+                    <span>🎁</span>
+                  </span>
                 )}
               </button>
 
@@ -306,14 +334,21 @@ export default function App() {
 
             </div>
           ) : (
-            /* Pantalla de Éxito */
-            <div className="w-full rounded-[28px] bg-[#261e1b] border border-white/10 p-7 sm:p-8 shadow-2xl text-center animate-fade-in">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[#f55f15]/20 border-2 border-[#f55f15] flex items-center justify-center mb-5">
-                <CheckCircle2 className="w-8 h-8 text-[#f55f15]" />
+            /* Pantalla de Éxito Navideña (Carta al Polo Norte) */
+            <div className="w-full rounded-[28px] bg-[#261e1b] border-t-2 border-white/20 border-x border-b border-white/10 p-7 sm:p-8 shadow-2xl text-center animate-fade-in relative overflow-hidden">
+              
+              {/* Resplandor cálido de fondo */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-20 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mb-4 shadow-lg shadow-emerald-950/40">
+                <span className="text-3xl">📮</span>
               </div>
-              <h2 className="text-2xl font-black text-white mb-2">¡Confesión Enviada! 🤫</h2>
-              <p className="text-xs sm:text-sm text-slate-300 mb-6">
-                Tu mensaje anónimo ha sido entregado a <strong>@urracavillarrealina</strong> con éxito y total privacidad.
+              <h2 className="text-2xl font-black text-white mb-2 flex items-center justify-center gap-2">
+                <span>¡Deseo Enviado!</span>
+                <span>✨</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed">
+                Tu confesión anónima ha sido sellada y depositada con éxito en el buzón secreto de <strong>@urracavillarrealina</strong> 🎄🤫
               </p>
               <div className="space-y-3">
                 <button
@@ -321,7 +356,7 @@ export default function App() {
                   className="w-full py-3.5 px-6 rounded-full font-bold text-white bg-[#f55f15] hover:bg-[#e04f08] transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  <span>Enviar otra confesión</span>
+                  <span>Enviar otro deseo navideño</span>
                 </button>
                 <a
                   href={FACEBOOK_URL}
