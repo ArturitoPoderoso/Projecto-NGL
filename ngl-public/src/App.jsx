@@ -117,11 +117,11 @@ export default function App() {
       return;
     }
 
-    // VERIFICAR BANEO LOCAL TEMPORAL
+    // VERIFICAR BANEO LOCAL TEMPORAL (24 HORAS)
     const baneoHasta = parseInt(localStorage.getItem('ngl_blocked_until') || '0', 10);
     if (Date.now() < baneoHasta) {
-      const minutosRestantes = Math.ceil((baneoHasta - Date.now()) / 60000);
-      setErrorMsg(`Has sido bloqueado temporalmente por spam. Intenta de nuevo en ${minutosRestantes} minutos.`);
+      const horasRestantes = Math.ceil((baneoHasta - Date.now()) / 3600000);
+      setErrorMsg(`Has sido bloqueado por spam. Intenta de nuevo en ${horasRestantes} horas ⛔`);
       return;
     }
 
@@ -139,11 +139,11 @@ export default function App() {
       const faltas = parseInt(localStorage.getItem('ngl_spam_strikes') || '0', 10) + 1;
       localStorage.setItem('ngl_spam_strikes', faltas.toString());
 
-      // Si insiste 3 veces con basura, BANEO de 30 minutos
+      // Si insiste 3 veces con basura, BANEO ESTRICTO DE 24 HORAS
       if (faltas >= 3) {
-        localStorage.setItem('ngl_blocked_until', (Date.now() + 30 * 60000).toString());
+        localStorage.setItem('ngl_blocked_until', (Date.now() + 24 * 3600000).toString());
         localStorage.setItem('ngl_spam_strikes', '0');
-        setErrorMsg('Has sido bloqueado temporalmente (30 min) por insistir en enviar mensajes sin sentido ⛔');
+        setErrorMsg('Has sido bloqueado por 24 horas por insistir en enviar spam o mensajes sin sentido ⛔');
         return;
       }
 
