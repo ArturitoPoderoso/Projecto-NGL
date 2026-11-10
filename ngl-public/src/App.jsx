@@ -70,9 +70,61 @@ export default function App() {
     setErrorMsg('');
   };
 
-  // Enviar mensaje a Supabase con protección Anti-Spam (silenciosa)
+  // Estados para trampas anti-bot y baneo local
+  const [honeypot, setHoneypot] = useState(''); // Campo oculto para atrapar bots de Python/curl
+  const [startTime] = useState(Date.now()); // Para calcular velocidad humana
+
+  // Función inteligente para detectar letras machacadas y mensajes basura
+  const esMensajeSospechoso = (texto) => {
+    // 1. Extraer solo letras
+    const soloLetras = texto.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, '');
+    
+    // Si no tiene NINGUNA letra (ej. puro emoji "🔥🔥🔥" o signos "???")
+    if (soloLetras.length === 0) {
+      return { esSpam: true, motivo: 'Por favor incluye palabras reales en tu confesión 😉' };
+    }
+
+    // 2. Detección de caracteres ultra repetidos (ej. "aaaaaaa", "jjjjjj")
+    if (/(.)\1{4,}/i.test(texto)) {
+      return { esSpam: true, motivo: 'Parece que repetiste demasiadas letras iguales. ¡Sé más original!' };
+    }
+
+    // 3. Detección de Keyboard Mashing (machacar el teclado sin vocales, ej. "jsdjadsafkasd")
+    // Busca secuencias de 6 o más consonantes seguidas sin vocales intermedias
+    if (/[bcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ]{6,}/i.test(texto)) {
+      return { esSpam: true, motivo: 'Parece que escribiste letras al azar. Por favor escribe un mensaje legible.' };
+    }
+
+    return { esSpam: false };
+  };
+
+  // Enviar mensaje a Supabase con protección Anti-Spam & Anti-Bot
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // TRAMPA 1: BOT TRAP (HONEYPOT)
+    // Si un bot de Python llena este campo invisible, lo frenamos silenciosamente sin consumir base de datos
+    if (honeypot) {
+      console.warn('Bot detectado.');
+      setEnviado(true); // Engañar al bot haciéndole creer que envió
+      return;
+    }
+
+    // TRAMPA 2: VELOCIDAD HUMANA
+    // Un bot envía en 100ms. Un humano tarda al menos 1.5s en abrir la página y enviar
+    if (Date.now() - startTime < 1200 && !contenido) {
+      setErrorMsg('Envío sospechoso. Por favor espera un momento.');
+      return;
+    }
+
+    // VERIFICAR BANEO LOCAL TEMPORAL
+    const baneoHasta = parseInt(localStorage.getItem('ngl_blocked_until') || '0', 10);
+    if (Date.now() < baneoHasta) {
+      const minutosRestantes = Math.ceil((baneoHasta - Date.now()) / 60000);
+      setErrorMsg(`Has sido bloqueado temporalmente por spam. Intenta de nuevo en ${minutosRestantes} minutos.`);
+      return;
+    }
+
     const textoFinal = contenido.trim() || promptActual;
 
     if (!textoFinal) {
@@ -80,19 +132,37 @@ export default function App() {
       return;
     }
 
-    // --- PROTECCIÓN ANTI-SPAM SILENCIOSA ---
+    // FILTRO INTELIGENTE: Letras machacadas / Solo emojis
+    const revision = esMensajeSospechoso(textoFinal);
+    if (revision.esSpam) {
+      // Incrementar contador de faltas
+      const faltas = parseInt(localStorage.getItem('ngl_spam_strikes') || '0', 10) + 1;
+      localStorage.setItem('ngl_spam_strikes', faltas.toString());
+
+      // Si insiste 3 veces con basura, BANEO de 30 minutos
+      if (faltas >= 3) {
+        localStorage.setItem('ngl_blocked_until', (Date.now() + 30 * 60000).toString());
+        localStorage.setItem('ngl_spam_strikes', '0');
+        setErrorMsg('Has sido bloqueado temporalmente (30 min) por insistir en enviar mensajes sin sentido ⛔');
+        return;
+      }
+
+      setErrorMsg(revision.motivo);
+      return;
+    }
+
+    // COOLDOWN SILENCIOSO (25 segundos invisibles)
     const now = Date.now();
     const lastSendTime = parseInt(localStorage.getItem('ngl_last_send') || '0', 10);
     const lastMsgText = (localStorage.getItem('ngl_last_msg') || '').trim();
-    const COOLDOWN_MS = 25000; // 25 segundos invisibles entre envíos
+    const COOLDOWN_MS = 25000;
 
-    // 1. Detección de mensaje repetido
+    // Detección de duplicado exacto
     if (lastMsgText && lastMsgText.toLowerCase() === textoFinal.toLowerCase()) {
       setErrorMsg('Ya enviaste este mismo mensaje. Sé más original 😉');
       return;
     }
 
-    // 2. Cooldown invisible (sin temporizador en pantalla)
     if (now - lastSendTime < COOLDOWN_MS) {
       setErrorMsg('Estás enviando confesiones muy rápido. Respira un momento e inténtalo de nuevo.');
       return;
@@ -108,9 +178,10 @@ export default function App() {
 
       if (error) throw error;
 
-      // Registrar huella de envío anti-spam
+      // Registrar éxito y reiniciar faltas
       localStorage.setItem('ngl_last_send', now.toString());
       localStorage.setItem('ngl_last_msg', textoFinal);
+      localStorage.setItem('ngl_spam_strikes', '0');
 
       confetti({
         particleCount: 110,
@@ -280,6 +351,18 @@ export default function App() {
                     placeholder={promptActual}
                     className="w-full bg-transparent border-0 outline-none text-[#d4ccc7] placeholder-[#a69e99] text-base sm:text-xl font-bold leading-snug resize-none select-text focus:ring-0"
                     autoFocus
+                  />
+
+                  {/* Campo Trampa Invisible para atrapar Bots de Python / Scripts (Honeypot) */}
+                  <input
+                    type="text"
+                    name="phone_check_ngl"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex="-1"
+                    autoComplete="off"
+                    style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', height: 0, width: 0 }}
+                    aria-hidden="true"
                   />
 
                   {/* Botón de Dado 🎲 en esquina inferior derecha */}
