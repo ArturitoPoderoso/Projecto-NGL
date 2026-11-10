@@ -70,13 +70,31 @@ export default function App() {
     setErrorMsg('');
   };
 
-  // Enviar mensaje a Supabase
+  // Enviar mensaje a Supabase con protección Anti-Spam (silenciosa)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const textoFinal = contenido.trim() || promptActual;
 
     if (!textoFinal) {
       setErrorMsg('Por favor escribe algo antes de enviar.');
+      return;
+    }
+
+    // --- PROTECCIÓN ANTI-SPAM SILENCIOSA ---
+    const now = Date.now();
+    const lastSendTime = parseInt(localStorage.getItem('ngl_last_send') || '0', 10);
+    const lastMsgText = (localStorage.getItem('ngl_last_msg') || '').trim();
+    const COOLDOWN_MS = 25000; // 25 segundos invisibles entre envíos
+
+    // 1. Detección de mensaje repetido
+    if (lastMsgText && lastMsgText.toLowerCase() === textoFinal.toLowerCase()) {
+      setErrorMsg('Ya enviaste este mismo mensaje. Sé más original 😉');
+      return;
+    }
+
+    // 2. Cooldown invisible (sin temporizador en pantalla)
+    if (now - lastSendTime < COOLDOWN_MS) {
+      setErrorMsg('Estás enviando confesiones muy rápido. Respira un momento e inténtalo de nuevo.');
       return;
     }
 
@@ -89,6 +107,10 @@ export default function App() {
         .insert([{ contenido: textoFinal }]);
 
       if (error) throw error;
+
+      // Registrar huella de envío anti-spam
+      localStorage.setItem('ngl_last_send', now.toString());
+      localStorage.setItem('ngl_last_msg', textoFinal);
 
       confetti({
         particleCount: 110,
